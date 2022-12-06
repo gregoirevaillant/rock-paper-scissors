@@ -1,35 +1,46 @@
+let playerScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
-    let number = Math.floor(Math.random() * 3);
+    let choice = Math.floor(Math.random() * 3);
     let computerChoice
-    if (number == 1)
-        return computerChoice = "rock";
-    else if (number == 2)
-        return computerChoice = "paper";
+    if (choice == 1)
+        return computerChoice = "ROCK";
+    else if (choice == 2)
+        return computerChoice = "PAPER";
     else
-        return computerChoice = "scissors";
+        return computerChoice = "SCISSORS";
 }
 
-const playerSelection = "rock";
+function getPlayerChoice() {
+    let choice = prompt("Rock, Paper, Scissors?");
+    choice = choice.toUpperCase();
+    return choice;
+}
+
+const playerSelection = getPlayerChoice();
 const computerSelection = getComputerChoice();
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection.toLowerCase();
     let result;
     if (playerSelection == computerSelection)
         result = "It's a draw!";
-    else if (playerSelection == "rock" && computerSelection == "paper")
+    else if (
+        playerSelection == "ROCK" && computerSelection == "PAPER" ||
+        playerSelection == "PAPER" && computerSelection == "SCISSORS" ||
+        playerSelection == "SCISSORS" && computerSelection == "ROCK") {
         result = "You lose!";
-    else if (playerSelection == "paper" && computerSelection == "rock")
+        computerScore++;
+    }
+    else if (playerSelection == "SCISSORS" && computerSelection == "PAPER" ||
+        playerSelection == "ROCK" && computerSelection == "SCISSORS" ||
+        playerSelection == "PAPER" && computerSelection == "ROCK") {
         result = "You win!";
-    else if (playerSelection == "paper" && computerSelection == "scissors")
-        result = "You lose!";
-    else if (playerSelection == "scissors" && computerSelection == "paper")
-        result = "You win!";
-    else if (playerSelection == "rock" && computerSelection == "scissors")
-        result = "You win!";
-    else if (playerSelection == "scissors" && computerSelection == "rock")
-        result = "You lose!";
+        playerScore++;
+    }
     return result;
 }
 
 console.log(playRound(playerSelection, computerSelection));
+console.log(playerScore);
+console.log(computerScore);
