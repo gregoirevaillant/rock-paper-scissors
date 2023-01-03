@@ -1,20 +1,6 @@
-let playerScoreCount = 0;
-let computerScoreCount = 0;
-let gameOn = true;
-let playerSelection;
-let computerSelection;
-let playerChoice;
-
-let playerButtonRock = document.querySelector("#ROCK");
-let playerButtonPaper = document.querySelector("#PAPER");
-let playerButtonScissors = document.querySelector("#SCISSORS");
-
-let buttons = document.querySelectorAll(".playerChoice");
-
-let isChoiceMade = false;
-
-let playerScore = document.querySelector("#scorePlayer");
-let computerScore = document.querySelector("#scoreComputer");
+let playerScore = 0;
+let computerScore = 0;
+let roundWinner = '';
 
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3);
@@ -28,68 +14,69 @@ function getComputerChoice() {
     }
 }
 
-function getPlayerChoice() {
-
-    playerChoice = prompt("What is your choice? ");
-    return playerChoice;
-
-}
-
-function getWinnerRound(playerSelection, computerSelection) {
-    let result;
+function playRound(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) {
-        result = "It's a tie!";
-        console.log(result)
+        roundWinner = "tie";
+        console.log(playerSelection)
+        console.log(computerSelection)
     } else if (
         playerSelection == "ROCK" && computerSelection == "PAPER" ||
         playerSelection == "PAPER" && computerSelection == "SCISSORS" ||
         playerSelection == "SCISSORS" && computerSelection == "ROCK"
     ) {
-        result = "You lose!";
-        console.log(result)
-        computerScoreCount++;
+        roundWinner = "computer";
+        computerScore++;
+        console.log(playerSelection)
+        console.log(computerSelection)
     } else if (playerSelection == "SCISSORS" && computerSelection == "PAPER" ||
         playerSelection == "ROCK" && computerSelection == "SCISSORS" ||
         playerSelection == "PAPER" && computerSelection == "ROCK"
     ) {
-        result = "You win!";
-        console.log(result)
-        playerScoreCount++;
+        roundWinner = "player";
+        playerScore++;
+        console.log(playerSelection)
+        console.log(computerSelection)
     }
 }
 
-function playRound() {
-    computerSelection = getComputerChoice();
-    console.log(computerSelection);
-    playerSelection = getPlayerChoice();
-    console.log(playerSelection)
-
-    getWinnerRound(playerSelection, computerSelection);
-    playerScore.textContent = playerScoreCount;
-    computerScore.textContent = computerScoreCount;
-
-
+function isGameOver() {
+    return playerScore === 5 || computerScore === 5
 }
 
-playRound();
+let rockButton = document.querySelector('#ROCK');
+let paperButton = document.querySelector('#PAPER');
+let scissorsButton = document.querySelector('#SCISSORS');
 
+let roundInformation = document.querySelector('#roundInfo');
 
-// function game() {
-//     while (gameOn) {
-//         playerSelection = getPlayerChoice();
-//         computerSelection = getComputerChoice();
-//         playRound(playerSelection, computerSelection);
-//         console.log(`score player: ${playerScore}`);
-//         console.log(`score computer: ${computerScore}`);
-//         if (playerScore === 5) {
-//             gameOn = false;
-//             console.log("You won the BO5")
-//         } else if (computerScore === 5) {
-//             gameOn = false;
-//             console.log("You lost the BO5")
-//         }
-//     }
-// }
+let computerScoreContent = document.querySelector('#scoreComputer');
+let playerScoreContent = document.querySelector('#scorePlayer');
 
-// game();
+let playerSelection = "PAPER";
+let computerSelection = getComputerChoice();
 
+rockButton.addEventListener('click', () => handleClick('ROCK'))
+paperButton.addEventListener('click', () => handleClick('PAPER'))
+scissorsButton.addEventListener('click', () => handleClick('SCISSORS'))
+
+function handleClick(playerSelection) {
+    if(isGameOver())
+        alert('Fin du jeu')
+    return playerSelection;
+    
+}
+
+function updateScore(){
+    if (roundWinner === "tie")
+        roundInformation.textContent = "Its a tie!"
+    else if (roundWinner === "computer")
+        roundInformation.textContent = "You lost!"
+    else if (roundWinner === "player")
+        roundInformation.textContent = "You won!"
+
+    computerScoreContent.textContent = computerScore;
+    playerScoreContent.textContent = playerScore;
+}
+
+playRound(playerSelection, computerSelection)
+updateScore()
