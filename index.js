@@ -1,3 +1,16 @@
+let tabImage = document.querySelector("link[rel='icon']");
+let imageCount = 0;
+
+function changeImage() {
+  imageCount++;
+  if (imageCount === 3) imageCount = 0;
+  tabImage.setAttribute("href", `./images/${imageCount}.ico`);
+}
+
+setInterval(() => {
+  changeImage();
+}, 1000);
+
 let playerScore = 0;
 let computerScore = 0;
 let roundWinner = "";
