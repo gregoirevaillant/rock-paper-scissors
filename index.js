@@ -53,7 +53,7 @@ let roundInformation = document.querySelector("#roundInfo");
 let computerScoreContent = document.querySelector("#scoreComputer");
 let playerScoreContent = document.querySelector("#scorePlayer");
 
-let playerSelection = "PAPER";
+let playerSelection = "ROCK";
 let computerSelection = getComputerChoice();
 
 rockButton.addEventListener("click", () => handleClick("ROCK"));
